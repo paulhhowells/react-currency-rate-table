@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFetchJson } from '../../hooks';
 
 const currencyRatesUrl = 'api/rates.json';
 
-/**
-    "success": true,
-    "timestamp": 1530089887,
-    "base": "EUR",
-    "date": "2018-06-27",
-    "rates": {
-        "AED": 4.271175,
-
- */
 export default function CurrencyRateTable () {
   const { json, loading } = useFetchJson(currencyRatesUrl);
 
@@ -20,15 +11,6 @@ export default function CurrencyRateTable () {
   }
   else if (json) {
     const { rates } = json;
-    console.log('rates', rates);
-
-    const rows = [{}, {}, {}];
-    // object -> array
-
-    // let rows = [];
-    // for (let [key, value] of Object.entries(rates)) {
-    // }
-    // for (const property in object) {
 
 
 
