@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFetchJson } from '../../hooks';
 import tableSort from './tableSort';
 
@@ -6,6 +6,7 @@ const currencyRatesUrl = 'api/rates.json';
 
 export default function CurrencyRateTable () {
   const { json, loading } = useFetchJson(currencyRatesUrl);
+  const [sortType, setSortType] = useState('currencyAscending');
 
   if (loading) {
     return <React.Fragment>Loading...</React.Fragment>
@@ -18,7 +19,7 @@ export default function CurrencyRateTable () {
       return { currency, rate };
     });
 
-    const sortedRows = tableSort(rows, 'currencyAscending');
+    const sortedRows = tableSort(rows, sortType);
 
     return (
       <table>
