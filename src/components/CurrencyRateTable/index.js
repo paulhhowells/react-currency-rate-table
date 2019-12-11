@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useFetchJson } from '../../hooks';
 import tableSort from './tableSort';
 import { DataRow } from './components';
+import './currencyRateTable.css';
 
 const currencyRatesUrl = 'api/rates.json';
 
