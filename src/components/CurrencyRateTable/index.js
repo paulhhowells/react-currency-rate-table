@@ -6,16 +6,32 @@ const currencyRatesUrl = 'api/rates.json';
 
 export default function CurrencyRateTable () {
   const { json, loading } = useFetchJson(currencyRatesUrl);
-  const [sortType, setSortType] = useState('currencyAscending');
+  const [ sortType, setSortType ] = useState('currencyAscending');
+
+  function handleSortToggle (toggleType) {
+    let newSortType = '';
+
+    if (toggleType === 'rate') {
+      newSortType = (sortType === 'rateAscending')
+        ? 'rateDescending'
+        : 'rateAscending';
+    } else {
+      newSortType = (sortType === 'currencyAscending')
+        ? 'currencyDescending'
+        : 'currencyAscending';
+    }
+
+    setSortType(newSortType);
+  }
 
   if (loading) {
     return <React.Fragment>Loading...</React.Fragment>
-  }
-  else if (json) {
+  } else if (json) {
     const { rates } = json;
 
     const rows = Object.entries(rates).map(row => {
       const [ currency, rate ] = row;
+
       return { currency, rate };
     });
 
@@ -27,10 +43,12 @@ export default function CurrencyRateTable () {
           <tr>
             <th
               scope="col"
+              onClick={() => handleSortToggle('currency')}>
               Currency
             </th>
             <th
               scope="col"
+              onClick={() => handleSortToggle('rate')}>
               Rate
             </th>
           </tr>
@@ -39,8 +57,8 @@ export default function CurrencyRateTable () {
         {
           sortedRows.map((row) => (
             <tr key={ row.currency }>
-              <td>{ row.currency }</td>
-              <td>{ row.rate }</td>
+              <td key={ row.currency + 0 }>{ row.currency }</td>
+              <td key={ row.currency + 1 }>{ row.rate }</td>
             </tr>
           ))
         }
