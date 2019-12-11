@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFetchJson } from '../../hooks';
 import tableSort from './tableSort';
+import { DataRow } from './components';
 
 const currencyRatesUrl = 'api/rates.json';
 
@@ -55,12 +56,7 @@ export default function CurrencyRateTable () {
         </thead>
         <tbody>
         {
-          sortedRows.map((row) => (
-            <tr key={ row.currency }>
-              <td key={ row.currency + 0 }>{ row.currency }</td>
-              <td key={ row.currency + 1 }>{ row.rate }</td>
-            </tr>
-          ))
+          sortedRows.map(row => <DataRow key={row.currency} row={row} />)
         }
         </tbody>
       </table>
