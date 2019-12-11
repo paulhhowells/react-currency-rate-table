@@ -23,10 +23,19 @@ export default function CurrencyRateTable () {
 
     return (
       <table>
-        <tr>
-          <th scope="col">Currency</th>
-          <th scope="col">Rate</th>
-        </tr>
+        <thead>
+          <tr>
+            <th
+              scope="col"
+              Currency
+            </th>
+            <th
+              scope="col"
+              Rate
+            </th>
+          </tr>
+        </thead>
+        <tbody>
         {
           sortedRows.map((row) => (
             <tr key={ row.currency }>
@@ -35,6 +44,7 @@ export default function CurrencyRateTable () {
             </tr>
           ))
         }
+        </tbody>
       </table>
     );
   } else {
