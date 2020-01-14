@@ -23,3 +23,7 @@ Clicking on a header column should sort the table by that column.
 Clicking on a header column that is already sorted should invert the sort direction.
 
 You need to get all tests passing.
+
+## To Do
+
+* Fix tests to work with functional components. (Make use of `act()` ?).
