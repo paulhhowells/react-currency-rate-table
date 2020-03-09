@@ -2,6 +2,7 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
 import 'jest-enzyme';
+import { create, act } from "react-test-renderer";
 import rates from '../public/api/ratesTest.json';
 import App from './App';
 
@@ -34,11 +35,18 @@ it('renders a table after data load', async () => {
     const app = mount(<App />);
     expect(app.find('div')).toHaveText('Loading...');
     await flushRequestsAndUpdate(app);
-    expect(app.find('table')).toExist();
+
+    process.nextTick(() => {
+        expect(app.find('table')).toExist();
+    });
 });
 
 it('renders rows with currency name as key', async () => {
-    const app = mount( <App /> );
+    let app = null;
+
+    act(() => {
+        app = mount( <App /> );
+    });
     await flushRequestsAndUpdate(app);
 
     expect(app.find('table tbody tr').at(0).key()).toEqual('AED');
@@ -62,21 +70,27 @@ it('renders table that is initially sorted by currency ascending', async () => {
 it('can sort first column descending', async () => {
     const app = mount(<App />);
     await flushRequestsAndUpdate(app);
-    app.find('table thead tr th').at(0).simulate('click');
+    act(() => {
+        app.find('table thead tr th').at(0).simulate('click');
+    });
     expect(app.find('table')).toMatchSnapshot();
 });
 
 it('can sort by second column ascending', async () => {
     const app = mount( <App /> );
     await flushRequestsAndUpdate(app);
-    app.find('table thead tr th').at(1).simulate('click');
+    act(() => {
+        app.find('table thead tr th').at(1).simulate('click');
+    });
     expect(app.find('table')).toMatchSnapshot();
 });
 
 it('can sort by second column descending', async () => {
     const app = mount(<App />);
     await flushRequestsAndUpdate(app);
-    app.find('table thead tr th').at(1).simulate('click');
-    app.find('table thead tr th').at(1).simulate('click');
+    act(() => {
+        app.find('table thead tr th').at(1).simulate('click');
+        app.find('table thead tr th').at(1).simulate('click');
+    });
     expect(app.find('table')).toMatchSnapshot();
 });
